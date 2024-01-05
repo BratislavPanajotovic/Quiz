@@ -121,11 +121,12 @@ const questions = [
 ];
 
 let questionsNum = questions.length;
+
 function getRandomQuestions(questionsArr) {
   let randomQs = [];
   let tempArray = [...questionsArr];
 
-  while (randomQs.length < 5 && tempArray.length > 0) {
+  while (randomQs.length < 5) {
     let randomIndex = Math.floor(Math.random() * tempArray.length);
     randomQs.push(tempArray.splice(randomIndex, 1)[0]);
   }
@@ -144,6 +145,26 @@ function questionMaker() {
 
     let currentDiv = document.querySelector(`.q${i + 1}`);
     currentDiv.appendChild(text);
+
+    // Create radio buttons and labels for each option
+    for (let j = 0; j < question.options.length; j++) {
+      let optionLabel = document.createElement("label");
+      let optionInput = document.createElement("input");
+
+      optionInput.type = "radio";
+      optionInput.name = `options_${i + 1}`;
+      optionInput.value = `option${j + 1}`;
+
+      // Check the first radio button by default
+      if (j === 0) {
+        optionInput.checked = true;
+      }
+
+      optionLabel.appendChild(optionInput);
+      optionLabel.appendChild(document.createTextNode(question.options[j]));
+
+      currentDiv.appendChild(optionLabel);
+    }
   }
 }
 
