@@ -142,11 +142,11 @@ function questionMaker() {
 
     let text = document.createElement("h2");
     text.textContent = `${question.question}`;
+    text.classList.add(`q${i}-Headline`);
 
     let currentDiv = document.querySelector(`.q${i + 1}`);
     currentDiv.appendChild(text);
 
-    // Create radio buttons and labels for each option
     for (let j = 0; j < question.options.length; j++) {
       let optionLabel = document.createElement("label");
       let optionInput = document.createElement("input");
@@ -154,8 +154,9 @@ function questionMaker() {
       optionInput.type = "radio";
       optionInput.name = `options_${i + 1}`;
       optionInput.value = `option${j + 1}`;
+      optionLabel.classList.add(`q${i}-option${i}`);
+      optionInput.classList.add(`q${i}-input${i}`);
 
-      // Check the first radio button by default
       if (j === 0) {
         optionInput.checked = true;
       }
@@ -167,5 +168,19 @@ function questionMaker() {
     }
   }
 }
-
 questionMaker();
+let btnSendAnswers = document.querySelector(".btns-Submit");
+btnSendAnswers.addEventListener("click", () => {
+  let divAnswers = document.querySelector(".answers");
+  divAnswers.innerHTML = "";
+
+  if (selectedAnswer[i] === correctAnswers[i]) {
+    let newP = document.createElement("p");
+    newP.textContent = `Answer for ${i}. Question is correct!`;
+    divAnswers.appendChild(newP);
+  } else {
+    let newP = document.createElement("p");
+    newP.textContent = `Answer for ${i}. Question is incorrect!`;
+    divAnswers.appendChild(newP);
+  }
+});
