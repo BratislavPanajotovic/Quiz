@@ -82,6 +82,7 @@ label {
   background-image: -o-linear-gradient(top, #db655e, #e6cf71);
   background-image: linear-gradient(to bottom, #db655e, #e6cf71);
   text-decoration: none;
+  cursor: pointer;
 }
 .btns-Reset {
   display: flex;
@@ -114,6 +115,7 @@ label {
   background-image: -o-linear-gradient(top, #db655e, #e6cf71);
   background-image: linear-gradient(to bottom, #db655e, #e6cf71);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .answers {
