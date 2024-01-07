@@ -1,0 +1,31 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+  margin: 0;
+}
+
+.q-conteiner {
+  display: flex;
+  flex-direction: column;
+}
+
+.q1,
+.q2,
+.q3,
+.q4,
+.q5 {
+  border: solid 3px black;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.q1 {
+  margin-top: 10px;
+}
+label {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  margin: 5px;
+}

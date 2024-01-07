@@ -135,13 +135,12 @@ function getRandomQuestions(questionsArr) {
 }
 
 let generateRandomQuestions = getRandomQuestions(questions);
-
 function questionMaker() {
   for (let i = 0; i < generateRandomQuestions.length; i++) {
     let question = generateRandomQuestions[i];
 
     let text = document.createElement("h2");
-    text.textContent = `${question.question}`;
+    text.textContent = `Question${i + 1}: ${question.question}`;
     text.classList.add(`q${i + 1}-Headline`);
 
     let currentDiv = document.querySelector(`.q${i + 1}`);
@@ -163,7 +162,6 @@ function questionMaker() {
 
       optionLabel.appendChild(optionInput);
       optionLabel.appendChild(document.createTextNode(question.options[j]));
-
       currentDiv.appendChild(optionLabel);
     }
   }
