@@ -140,7 +140,7 @@ function questionMaker() {
     let question = generateRandomQuestions[i];
 
     let text = document.createElement("h2");
-    text.textContent = `Question${i + 1}: ${question.question}`;
+    text.textContent = `${i + 1}. ${question.question}`;
     text.classList.add(`q${i + 1}-Headline`);
 
     let currentDiv = document.querySelector(`.q${i + 1}`);
@@ -198,6 +198,7 @@ btnSendAnswers.addEventListener("click", () => {
       console.log("Correct Answer:", generateRandomQuestions[i].correctAnswer);
     }
   }
+  divAnswers.scrollIntoView({ behavior: "smooth" });
 });
 
 let newQuestions = document.querySelector(".btns-Reset");
@@ -213,4 +214,6 @@ newQuestions.addEventListener("click", () => {
 
   generateRandomQuestions = getRandomQuestions(questions);
   questionMaker();
+
+  document.getElementById("topOfPage").scrollIntoView({ behavior: "smooth" });
 });
