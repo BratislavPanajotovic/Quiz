@@ -6,7 +6,7 @@ const question1 = {
     "Hyperlink and Text Markup Language",
     "High-Level Text Markup Language",
   ],
-  correctAnswer: "B",
+  correctAnswer: "option2",
 };
 
 const question2 = {
@@ -17,25 +17,25 @@ const question2 = {
     '<css type="text/css" href="style.css">',
     "<stylesheet>style.css</stylesheet>",
   ],
-  correctAnswer: "A",
+  correctAnswer: "option1",
 };
 
 const question3 = {
   question: "What keyword is used to declare variables in JavaScript?",
   options: ["var", "int", "declare", "variable"],
-  correctAnswer: "A",
+  correctAnswer: "option1",
 };
 
 const question4 = {
   question: "Which tag is used to create a hyperlink in HTML?",
   options: ["<url>", "<link>", "<a>", "<hyperlink>"],
-  correctAnswer: "C",
+  correctAnswer: "option1",
 };
 
 const question5 = {
   question: "How can you select an element with id 'example' in CSS?",
   options: ["#example", ".example", "*example*", "element(example)"],
-  correctAnswer: "A",
+  correctAnswer: "option1",
 };
 
 const question6 = {
@@ -46,7 +46,7 @@ const question6 = {
     "To define a new CSS style",
     "To validate HTML documents",
   ],
-  correctAnswer: "A",
+  correctAnswer: "option1",
 };
 
 const question7 = {
@@ -57,13 +57,13 @@ const question7 = {
     "<!DOCTYPE html>",
     "<!DOCTYPE xhtml>",
   ],
-  correctAnswer: "C",
+  correctAnswer: "option3",
 };
 
 const question8 = {
   question: "How do you add comments in CSS?",
   options: ["// Comment", "<!-- Comment -->", "/* Comment */", "** Comment **"],
-  correctAnswer: "C",
+  correctAnswer: "option3",
 };
 
 const question9 = {
@@ -74,13 +74,13 @@ const question9 = {
     "To create a new variable",
     "To define a function",
   ],
-  correctAnswer: "A",
+  correctAnswer: "option1",
 };
 
 const question10 = {
   question: "Which tag is used to define an unordered list in HTML?",
   options: ["<list>", "<ol>", "<ul>", "<li>"],
-  correctAnswer: "C",
+  correctAnswer: "option3",
 };
 
 const question11 = {
@@ -91,7 +91,7 @@ const question11 = {
     "margin: auto;",
     "horizontal-align: center;",
   ],
-  correctAnswer: "C",
+  correctAnswer: "option3",
 };
 
 const question12 = {
@@ -102,7 +102,7 @@ const question12 = {
     "Checks if a variable is defined",
     "Converts a variable to a string",
   ],
-  correctAnswer: "A",
+  correctAnswer: "option1",
 };
 
 const questions = [
@@ -142,7 +142,7 @@ function questionMaker() {
 
     let text = document.createElement("h2");
     text.textContent = `${question.question}`;
-    text.classList.add(`q${i}-Headline`);
+    text.classList.add(`q${i + 1}-Headline`);
 
     let currentDiv = document.querySelector(`.q${i + 1}`);
     currentDiv.appendChild(text);
@@ -154,8 +154,8 @@ function questionMaker() {
       optionInput.type = "radio";
       optionInput.name = `options_${i + 1}`;
       optionInput.value = `option${j + 1}`;
-      optionLabel.classList.add(`q${i}-option${i}`);
-      optionInput.classList.add(`q${i}-input${i}`);
+      optionLabel.classList.add(`q${i + 1}-option${j + 1}`);
+      optionInput.classList.add(`q${i + 1}-input${j + 1}`);
 
       if (j === 0) {
         optionInput.checked = true;
@@ -169,18 +169,50 @@ function questionMaker() {
   }
 }
 questionMaker();
+
 let btnSendAnswers = document.querySelector(".btns-Submit");
 btnSendAnswers.addEventListener("click", () => {
   let divAnswers = document.querySelector(".answers");
   divAnswers.innerHTML = "";
 
-  if (selectedAnswer[i] === correctAnswers[i]) {
-    let newP = document.createElement("p");
-    newP.textContent = `Answer for ${i}. Question is correct!`;
-    divAnswers.appendChild(newP);
-  } else {
-    let newP = document.createElement("p");
-    newP.textContent = `Answer for ${i}. Question is incorrect!`;
-    divAnswers.appendChild(newP);
+  let selectedAnswers = [];
+
+  for (let i = 0; i < generateRandomQuestions.length; i++) {
+    let userAnswer = document.querySelector(
+      `input[name=options_${i + 1}]:checked`
+    );
+
+    userAnswer = userAnswer.value;
+
+    selectedAnswers.push(userAnswer);
+
+    if (userAnswer === generateRandomQuestions[i].correctAnswer) {
+      let newP = document.createElement("p");
+      newP.textContent = `Answer for Question ${i + 1} is correct!`;
+      newP.classList.add("correctAnswer");
+      divAnswers.appendChild(newP);
+    } else {
+      let newP = document.createElement("p");
+      newP.textContent = `Answer for Question ${i + 1} is incorrect!`;
+      newP.classList.add("incorrectAnswer");
+      divAnswers.appendChild(newP);
+      console.log("User's Answer:", userAnswer);
+      console.log("Correct Answer:", generateRandomQuestions[i].correctAnswer);
+    }
   }
+});
+
+let newQuestions = document.querySelector(".btns-Reset");
+
+newQuestions.addEventListener("click", () => {
+  for (let i = 0; i < generateRandomQuestions.length; i++) {
+    let currentDiv = document.querySelector(`.q${i + 1}`);
+    currentDiv.innerHTML = "";
+  }
+
+  let divAnswers = document.querySelector(".answers");
+  divAnswers.innerHTML = "";
+
+  generateRandomQuestions = getRandomQuestions(questions);
+  questionMaker();
 });
