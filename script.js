@@ -121,7 +121,7 @@ const questions = [
 ];
 
 let questionsNum = questions.length;
-
+//! Izaberu se 5 nasumicna broja u odnosu na duzinu pitanja i pitanja dodaju u novi niz
 function getRandomQuestions(questionsArr) {
   let randomQs = [];
   let tempArray = [...questionsArr];
@@ -130,15 +130,16 @@ function getRandomQuestions(questionsArr) {
     let randomIndex = Math.floor(Math.random() * tempArray.length);
     randomQs.push(tempArray.splice(randomIndex, 1)[0]);
   }
-
+  console.log(randomQs);
   return randomQs;
 }
 
 let generateRandomQuestions = getRandomQuestions(questions);
+//! 5 nasumicnih pitanja iz promenljive generateRandomQuestions dohvatiti iz niza pitanja
 function questionMaker() {
   for (let i = 0; i < generateRandomQuestions.length; i++) {
     let question = generateRandomQuestions[i];
-
+    console.log(question);
     let text = document.createElement("h2");
     text.textContent = `${i + 1}. ${question.question}`;
     text.classList.add(`q${i + 1}-Headline`);
@@ -167,7 +168,7 @@ function questionMaker() {
   }
 }
 questionMaker();
-
+//! Poslati odgovore i prikaciti ih za svoj div
 let btnSendAnswers = document.querySelector(".btns-Submit");
 btnSendAnswers.addEventListener("click", () => {
   let divAnswers = document.querySelector(".answers");
@@ -175,6 +176,7 @@ btnSendAnswers.addEventListener("click", () => {
 
   let selectedAnswers = [];
 
+  //! Provera izabranih odgovora
   for (let i = 0; i < generateRandomQuestions.length; i++) {
     let userAnswer = document.querySelector(
       `input[name=options_${i + 1}]:checked`
@@ -197,9 +199,12 @@ btnSendAnswers.addEventListener("click", () => {
       console.log("User's Answer:", userAnswer);
       console.log("Correct Answer:", generateRandomQuestions[i].correctAnswer);
     }
+    btnSendAnswers.disabled = true;
   }
   divAnswers.scrollIntoView({ behavior: "smooth" });
 });
+
+//! Generisi nova pitanja
 
 let newQuestions = document.querySelector(".btns-Reset");
 
@@ -216,4 +221,5 @@ newQuestions.addEventListener("click", () => {
   questionMaker();
 
   document.getElementById("topOfPage").scrollIntoView({ behavior: "smooth" });
+  btnSendAnswers.disabled = false;
 });
